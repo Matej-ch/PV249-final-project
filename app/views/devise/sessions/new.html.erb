@@ -1,0 +1,26 @@
+<div class="col-md-offset-1 col-md-4 col-lg-offset-1 col-lg-4 col-sm-offset-1 col-sm-4">
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'well'}) do |f| %>
+    <fieldset>
+      <legend>Sign In</legend>
+        <%= f.input :email %>
+        <%= f.input :password %>
+
+      <% if devise_mapping.rememberable? -%>
+          <%= f.input :remember_me, as: :boolean %>
+      <% end -%>
+
+      <div class="actions">
+        <%= f.button :submit, 'Sign in', class: 'btn-success' %>
+      </div>
+    </fieldset>
+<% end %>
+
+<%= render 'devise/shared/links' %>
+</div>
+  <div class="col-md-5 col-lg-5 col-sm-5">
+    <%= image_tag('logo.jpg', :alt => 'logo') %>
+  </div>
+  <div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" style="padding-left: 0;padding-right: 0;">
+    <h4 class="our-motto">Imagine <span>FriendFace</span> as petri dish full of deadly bacteria, but instead of dying you'll get new friends
+    </h4>
+  </div>

@@ -1,0 +1,29 @@
+<div class="header col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+  <h1><%= @user.full_name %></h1>
+
+  <%if signed_in? %>
+      <div id="friend-status">
+        <% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
+            <%= link_to 'Edit Friendship', edit_user_friendship_path(friend_id: @user), class: 'btn btn-warning' %>
+        <% else %>
+            <%= link_to 'Add to Friendzone', new_user_friendship_path(friend_id: @user.nick_name), class: 'btn btn-primary',
+                        id: 'add-friendship', data: { friend_id: @user.to_param } %>
+      <% end %>
+      </div>
+  <% end %>
+  <div class="border_custom"></div>
+
+  <% if @statuses %>
+      <% @statuses.each do |status| %>
+          <div class="profile_stats col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+            <%= status.content %>
+          <hr>
+          <%= link_to time_ago_in_words(status.created_at), status_path(status)%> ago
+          </div>
+      <%end%>
+  <% else %>
+      <div class="profile_stats col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+        <h3>You should start sending statuses or get out</h3>
+      </div>
+  <%end %>
+</div>

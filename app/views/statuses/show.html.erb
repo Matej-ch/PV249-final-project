@@ -1,0 +1,15 @@
+<div class="col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>User:</strong>
+  <%= @status.user.full_name %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @status.content %>
+</p>
+
+<%= link_to 'Edit', edit_status_path(@status), :class => 'btn btn-primary' %> |
+<%= link_to 'Back', statuses_path, :class => 'btn btn-default' %>
+</div>

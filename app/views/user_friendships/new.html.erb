@@ -1,0 +1,14 @@
+<div class="header col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+    <% if @friend %>
+        <h1><%= @friend.full_name %></h1>
+        <p>Do you really want <strong><%= @friend.full_name %></strong> to be your friend ?</p>
+
+        <%= form_for @user_friendship, method: :post do |form| %>
+            <div class="form form-actions">
+              <%= form.hidden_field :friend_id, value: @friend.nick_name %>
+                <%= submit_tag "Yes please", class: 'btn btn-primary' %>
+              <%= link_to "NO, thanks", profile_path(@friend), title: 'NO GOD! PLEASE NO!!! NOOOOOOOOOO', class:'btn btn-danger'%>
+            </div>
+        <% end %>
+    <% end %>
+</div>

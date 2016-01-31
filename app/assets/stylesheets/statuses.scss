@@ -1,0 +1,28 @@
+// Place all the styles related to the statuses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.status{
+  padding: 5px 0;
+
+  .admin{
+    display: none;
+  }
+
+  .hover .admin{
+    display: inline;
+  }
+}
+
+.wrapper-statuses{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  .wrapper_gravatar{
+    text-align: center;
+  }
+}
+.new-stat{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

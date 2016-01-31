@@ -1,0 +1,38 @@
+<div class="header col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+  <h1>Reconsider status of this "Friend"</h1>
+  <hr>
+
+  <div class="row">
+    <div class="avatar col-sm-2 col-md-2 col-lg-2">
+      <%= image_tag @user_friendship.user.gravatar_url %><br/>
+      <%= @user_friendship.user.first_name %>
+    </div>
+    <div class="avatar col-lg-2">
+      <%= image_tag @user_friendship.friend.gravatar_url %><br/>
+      <%= @user_friendship.friend.first_name %>
+    </div>
+  </div>
+
+  <h3><%= @user_friendship.sub_message %></h3>
+
+  <div class="form-actions">
+    <% if @user_friendship.requested? %>
+        <%= form_for @user_friendship, url: accept_user_friendship_path(@user_friendship), method:
+                                             :put do |form| %>
+            <%= submit_tag "Accept your fate", class: 'btn btn-primary' %>
+        <% end %>
+    <% end %>
+
+    <%= form_for @user_friendship, url: block_user_friendship_path(@user_friendship), method:
+                                         :put do |form| %>
+        <%= submit_tag "Block forever", class: 'btn btn-danger' %>
+    <% end %>
+
+    <div style="margin-top: 20px;">
+    <%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method:
+                                         :delete do |form| %>
+        <%= submit_tag "Remove 'Friend'", class: 'btn btn-danger' %>
+    <% end %>
+    </div>
+  </div>
+</div>

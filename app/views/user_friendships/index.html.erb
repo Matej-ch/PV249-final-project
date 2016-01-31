@@ -1,0 +1,43 @@
+<div class="header col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+  <h1>"Friends"</h1>
+  <hr>
+
+  <div>
+    <strong>Friend list:</strong>
+    <%= link_to 'Blocked', user_friendships_path(list: 'blocked'), class: 'btn btn-danger' %>
+    <%= link_to 'Requested', user_friendships_path(list: 'requested'), class: 'btn btn-warning' %>
+    <%= link_to 'Accepted', user_friendships_path(list: 'accepted'), class: 'btn btn-success' %>
+    <%= link_to 'Pending', user_friendships_path(list: 'pending'), class: 'btn btn-primary' %>
+  </div>
+
+  <div>
+    <% @user_friendships.each do |friendship| %>
+        <% friend = friendship.friend %>
+        <div class="row wrapper-statuses friend" id="<%= dom_id(friendship) %>" style="clear: left;">
+          <div class="wrapper_gravatar col-sm-2 col-md-1 col-lg-1">
+            <%= link_to image_tag(friend.gravatar_url),profile_path(friend) %>
+          </div>
+          <div class="col-sm-8 col-lg-9 col-lg-9">
+            <div class="status">
+              <strong><%= friend.full_name %></strong>
+              <% if friendship.pending? %>
+              <p> Waiting to be FriendZoned
+                <%= link_to 'Remove', edit_user_friendship_path(friendship.friend.nick_name), class: 'btn btn-danger' %></p>
+              <% end %>
+              <% if friendship.requested? %>
+                  <h4> <%= friend.nick_name %> FriendZoned you
+                    <%= link_to 'Accept Reality', edit_user_friendship_path(friendship.friend.nick_name), class: 'btn btn-success' %></h4>
+              <% end %>
+              <% if friendship.accepted? %>
+                  <p> It all started <%= friendship.updated_at %>. <%= link_to 'Update', edit_user_friendship_path(friendship.friend.nick_name), class: 'btn btn-warning' %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <hr>
+    <% end %>
+  </div>
+
+  <hr>
+  <h3><em>FriendFace</em> FriendZoning people since 2016</h3>
+</div>
