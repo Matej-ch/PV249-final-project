@@ -24,7 +24,7 @@
       <ul class="nav navbar-nav">
         <% if user_signed_in? %>
             <li><%= link_to 'Friends', user_friendships_path %></li>
-            <li><%= link_to 'My Statuses', profiles_show_path %></li>
+            <li><%= link_to 'Galleries', albums_path(current_user) %></li>
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">

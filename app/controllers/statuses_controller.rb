@@ -14,6 +14,7 @@ class StatusesController < ApplicationController
   # GET /statuses/new
   def new
     @status = Status.new
+    @status.build_document
   end
 
   # GET /statuses/1/edit
@@ -36,11 +37,13 @@ class StatusesController < ApplicationController
   # PATCH/PUT /statuses/1
   def update
     @status = current_user.statuses.find(params[:id])
+    @document = @status.document
     if  params[:status] && params[:status].has_key?(:user_id)
       params[:status].delete(:user_id)
     end
     respond_to do |format|
-      if @status.update_attributes(params[:status])
+      if @status.update_attributes(params[:status]) &&
+      @document && @document.update_attributes(params[:status][:document_attributes])
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
       else
         format.html { render :edit }
@@ -64,6 +67,6 @@ class StatusesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def status_params
-      params.require(:status).permit(:content, :user_id)
+      params.require(:status).permit(:content, :user_id, :document_attributes => [:attachment])
     end
 end

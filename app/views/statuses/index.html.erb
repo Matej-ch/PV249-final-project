@@ -9,12 +9,13 @@
     <% if  can_display_status?(status) %>
         <div class="row wrapper-statuses" style="clear: left;">
             <div class="wrapper_gravatar col-sm-2 col-md-1 col-lg-1">
-              <%= link_to image_tag(status.user.gravatar_url),profile_path(status.user) %>
+              <%= avatar_profile_link status.user, {class:'img-circle', width: '100px', height: '100px'},class: 'high-test' %>
             </div>
             <div class="col-sm-8 col-lg-9 col-lg-9">
                 <div class="status">
                   <strong><%= status.user.full_name %></strong>
                   <p><%= status.content %></p>
+                  <%= show_file(status) %>
                   <div class="links-buttons">
                     <%= link_to time_ago_in_words(status.created_at) + ' ago', status %>
                     <span class="admin">

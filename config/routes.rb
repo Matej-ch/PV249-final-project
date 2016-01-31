@@ -1,15 +1,4 @@
 Rails.application.routes.draw do
-  get 'profiles/show'
-
-=begin
-  devise_for :users #, skip: [:sessions]
-
-  devise_scope :user do
-    get "register", to: "devise/registrations#new", as: :register
-    get "login", to: "devise/sessions#new", as: :login
-    get "logout", to: "devise/sessions#destroy", as: :logout
-  end
-=end
 
   as :user do
     get "/register", to: "devise/registrations#new", as: :register
@@ -35,5 +24,10 @@ Rails.application.routes.draw do
   get 'feed', to: 'statuses#index', as: :feed
   root to: 'statuses#index'
 
+  scope ':nick_name' do
+    resources :albums do
+      resources :pictures
+    end
+  end
   get '/:id', to: 'profiles#show', as: 'profile'
 end

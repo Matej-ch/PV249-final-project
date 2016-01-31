@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   has_many :statuses
+  has_many :albums
+  has_many :pictures
   has_many :user_friendships
   has_many :friends, ->{ where(user_friendships: { state: 'accepted' }) }, through: :user_friendships
 
@@ -32,6 +34,11 @@ class User < ActiveRecord::Base
                           with:/\A[a-zA-Z\-\_]+\Z/,
                           message: 'Incorrect symbols or letters or whatever.'
                       }
+
+  has_attached_file :avatar,
+                    :default_url => '/images/missing.png'
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
   def full_name
     first_name + ' ' + last_name
   end

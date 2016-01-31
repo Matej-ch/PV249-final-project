@@ -10,7 +10,17 @@
         <%= f.input :last_name %>
         <%= f.input :nick_name %>
         <%= f.input :email %>
+      </fieldset>
 
+      <fieldset>
+        <legend>Profile Picture</legend>
+        <%= f.input :avatar, as: :file %>
+        <% if f.object.avatar? %>
+        <%= image_tag f.object.avatar.url, width: '150px', height: '150px' %>
+        <% end %>
+      </fieldset>
+      <fieldset>
+        <legend>Password</legend>
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
@@ -20,6 +30,8 @@
         <%= f.input :current_password %><i>(we need your current password to confirm your changes)</i>
         <%= f.button :submit, 'Update' , class: 'btn-success' %>
       </fieldset>
+
+
 <% end %>
 
 <h3>Cancel my account</h3>

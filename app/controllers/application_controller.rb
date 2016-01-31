@@ -25,6 +25,8 @@ class ApplicationController < ActionController::Base
                                                                    :first_name,
                                                                    :last_name,
                                                                    :nick_name,
-                                                                   :password) }
+                                                                   :password,
+                                                                   :current_password,
+                                                                   :avatar) }
   end
 end
