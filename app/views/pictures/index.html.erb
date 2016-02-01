@@ -1,6 +1,6 @@
 <div class="col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
   <% if signed_in? && current_user == @user %>
-    <p><%= link_to 'Share new', new_album_picture_path(current_user, @album),class: 'btn btn-primary' %></p>
+    <p><%= link_to 'Share new pic', new_album_picture_path(current_user, @album),class: 'btn btn-primary' %></p>
   <% end %>
   <h1><%= @album.title %></h1>
   <hr>

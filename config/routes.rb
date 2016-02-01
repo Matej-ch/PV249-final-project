@@ -22,7 +22,12 @@ Rails.application.routes.draw do
       put :block
     end
   end
-  resources :statuses
+  resources :statuses do
+    member do
+      put 'like', to: 'statuses#upvote'
+      put 'dislike', to: 'statuses#downvote'
+    end
+  end
   get 'feed', to: 'statuses#index', as: :feed
   root to: 'statuses#index'
 

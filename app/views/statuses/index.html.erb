@@ -16,6 +16,9 @@
                   <h3><%= status.user.full_name %></h3>
                   <p><%= status.content %></p>
                   <%= show_file(status) %>
+                  <div style="padding-bottom: 5px; padding-top: 5px;">
+                    <span><%= link_to 'Like', like_status_path(status), method: :put %></span>
+                    | <span><%= link_to 'Dislike', dislike_status_path(status), method: :put %></span> | <span><%= status.score %></span></div>
                   <div class="links-buttons">
                     <%= link_to time_ago_in_words(status.created_at) + ' ago', status %>
                     <% if signed_in? && current_user == status.user %>
