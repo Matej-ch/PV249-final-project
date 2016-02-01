@@ -1,0 +1,7 @@
+Became friends with
+<% if item.targetable %>
+    <%= item.targetable.friend.first_name %>. <br />
+    <%= avatar_profile_link item.targetable.friend, {}, class: '' %>
+<% else %>
+    a user.
+<% end %>

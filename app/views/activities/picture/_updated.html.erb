@@ -1,0 +1,4 @@
+<p>Updated a picture.</p>
+<% if item.targetable %>
+    <%= image_tag item.targetable.asset.url(:thumb), class: '' %>
+<% end %>

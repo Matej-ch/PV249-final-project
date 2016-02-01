@@ -7,8 +7,10 @@
         <% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
             <%= link_to 'Edit Friendship', edit_user_friendship_path(friend_id: @user), class: 'btn btn-warning' %>
         <% else %>
-            <%= link_to 'Add to Friendzone', new_user_friendship_path(friend_id: @user.nick_name), class: 'btn btn-primary',
+            <% if current_user != @user %>
+            <%= link_to 'Add to Friendzone', new_user_friendship_path(friend_id: @user), class: 'btn btn-primary',
                         id: 'add-friendship', data: { friend_id: @user.to_param } %>
+                <% end %>
       <% end %>
       </div>
   <% end %>

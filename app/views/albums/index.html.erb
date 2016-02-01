@@ -22,7 +22,9 @@
       </div>
     <% end %>
 
+  <% if signed_in? && current_user == @user %>
 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
     <%= link_to 'New Album', new_album_path, class: 'btn btn-primary' %>
   </div>
+<% end  %>
 </div>

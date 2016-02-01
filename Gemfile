@@ -7,6 +7,8 @@ gem 'rails', '4.2.5'
 group :development do
   gem 'sqlite3'
   gem 'log_buddy'
+  #doesnt work on heroku normally
+  gem 'js-routes'
 end
 
 group :production do
@@ -46,7 +48,6 @@ gem 'state_machine'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
-gem 'js-routes'
 gem 'draper'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

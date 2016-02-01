@@ -1,3 +1,4 @@
+/*
 $(document).ready(function(){
     $.ajax({
         url: Routes.user_friendships_path({format: 'json'}),
@@ -21,4 +22,4 @@ $(document).ready(function(){
     }
     });
 });
-});
+});*/

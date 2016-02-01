@@ -17,18 +17,22 @@
 
   <div class="form-actions">
     <% if @user_friendship.requested? %>
+        <div style="margin-top: 20px;" class="col-lg-2 col-sm-2 col-md-2">
         <%= form_for @user_friendship, url: accept_user_friendship_path(@user_friendship), method:
                                              :put do |form| %>
             <%= submit_tag "Accept your fate", class: 'btn btn-primary' %>
         <% end %>
+        </div>
     <% end %>
 
-    <%= form_for @user_friendship, url: block_user_friendship_path(@user_friendship), method:
-                                         :put do |form| %>
-        <%= submit_tag "Block forever", class: 'btn btn-danger' %>
-    <% end %>
+    <div style="margin-top: 20px;" class=" col-lg-1 col-sm-1 col-md-1">
+        <%= form_for @user_friendship, url: block_user_friendship_path(@user_friendship), method:
+                                             :put do |form| %>
+            <%= submit_tag "Block forever", class: 'btn btn-danger' %>
+        <% end %>
+      </div>
 
-    <div style="margin-top: 20px;">
+    <div style="margin-top: 20px;" class=" col-lg-1 col-sm-1 col-md-1">
     <%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method:
                                          :delete do |form| %>
         <%= submit_tag "Remove 'Friend'", class: 'btn btn-danger' %>

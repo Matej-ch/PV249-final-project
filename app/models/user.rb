@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :albums
   has_many :pictures
   has_many :user_friendships
+  has_many :activities
   has_many :friends, ->{ where(user_friendships: { state: 'accepted' }) }, through: :user_friendships
 
   has_many :pending_user_friendships, ->{ where(user_friendships: {state: 'pending'}) }, class_name: 'UserFriendship',
@@ -60,5 +61,13 @@ class User < ActiveRecord::Base
 
   def has_blocked?(other)
     blocked_friends.include?(other)
+  end
+
+  def create_activity(item, action)
+    activity = activities.new
+    activity.targetable = item
+    activity.action = action
+    activity.save
+    activity
   end
 end

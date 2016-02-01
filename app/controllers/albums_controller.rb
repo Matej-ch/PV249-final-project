@@ -8,18 +8,27 @@ class AlbumsController < ApplicationController
   # GET /albums
   # GET /albums.json
   def index
-    @albums = Album.all
+    @albums = @user.albums.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @albums }
+    end
   end
 
   # GET /albums/1
   # GET /albums/1.json
   def show
-    redirect_to album_pictures_path(params[:album_id])
+    redirect_to album_pictures_path(params[:id])
   end
 
   # GET /albums/new
   def new
-    @album = current_user.albums.new
+     @album = current_user.albums.new
+     respond_to do |format|
+       format.html # new.html.erb
+       format.json { render json: @album }
+     end
   end
 
   # GET /albums/1/edit
@@ -34,11 +43,12 @@ class AlbumsController < ApplicationController
 
     respond_to do |format|
       if @album.save
+        current_user.create_activity(@album,'created')
         format.html { redirect_to @album, notice: 'Album was successfully created.' }
-        format.json { render :show, status: :created, location: @album }
+        #format.json { render :show, status: :created, location: @album }
       else
         format.html { render :new }
-        format.json { render json: @album.errors, status: :unprocessable_entity }
+        #format.json { render json: @album.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,7 +58,8 @@ class AlbumsController < ApplicationController
   def update
     respond_to do |format|
       if @album.update(album_params)
-        format.html { redirect_to album_pictures_path, notice: 'Album was successfully updated.' }
+        current_user.create_activity(@album,'updated')
+        format.html { redirect_to album_pictures_path, notice: 'Gallery was successfully updated.' }
         format.json { render :show, status: :ok, location: @album }
       else
         format.html { render :edit }
@@ -61,8 +72,9 @@ class AlbumsController < ApplicationController
   # DELETE /albums/1.json
   def destroy
     @album.destroy
+    current_user.create_activity(@album,'deleted')
     respond_to do |format|
-      format.html { redirect_to albums_url, notice: 'Album was successfully destroyed.' }
+      format.html { redirect_to albums_url, notice: 'Gallery was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -79,7 +91,7 @@ class AlbumsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def album_params
-      params.require(:album).permit(:user_id, :title)
+      params.require(:album).permit(:user_id, :title, :album_id)
     end
 
     def find_user
@@ -99,6 +111,6 @@ class AlbumsController < ApplicationController
 
   def add_breadcrumbs
     add_breadcrumb @user, profile_path(@user)
-    add_breadcrumb 'Albums', albums_path
+    add_breadcrumb 'Galleries', albums_path
   end
 end

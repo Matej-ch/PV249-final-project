@@ -1,15 +1,16 @@
 class UserFriendshipsController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html, :json
+  respond_to :html
 
   def index
     @user_friendships = UserFriendshipDecorator.decorate_collection(friendship_assoc.all)
-    respond_with @user_friendship
+    respond_with @user_friendships
   end
 
   def accept
     @user_friendships = current_user.user_friendships.find(params[:id])
     if @user_friendships.accept!
+      current_user.create_activity(@user_friendships,'accepted')
       flash[:success] = "You are now FriendZoned by #{@user_friendships.friend.first_name}"
     else
       flash[:error] = 'That friendship would not work anyway'
@@ -41,17 +42,9 @@ class UserFriendshipsController < ApplicationController
       @user_friendship = UserFriendship.request(current_user, @friend)
       respond_to do |format|
         if @user_friendship.new_record?
-          format.html do
-            flash[:error] = "There was a problem"
-            redirect_to profile_path(@friend)
-          end
-          format.json { render json: @user_friendship.to_json, status: :precondition_failed }
+          format.html { redirect_to profile_path(@friend), error: 'There was a problem' }
         else
-          format.html do
-            flash[:notice] = "You just Friendzoned #{ @friend.full_name }"
-            redirect_to profile_path(@friend)
-          end
-          format.json { render json: @user_friendship.to_json }
+          format.html { redirect_to profile_path(@friend), notice: "You just Friendzoned #{ @friend.full_name }" }
         end
       end
     else

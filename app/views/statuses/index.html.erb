@@ -6,22 +6,24 @@
     </div>
 </div>
 <% @statuses.each do |status| %>
-    <% if  can_display_status?(status) %>
+    <% if can_display_status?(status) %>
         <div class="row wrapper-statuses" style="clear: left;">
             <div class="wrapper_gravatar col-sm-2 col-md-1 col-lg-1">
               <%= avatar_profile_link status.user, {class:'img-circle', width: '100px', height: '100px'},class: 'high-test' %>
             </div>
             <div class="col-sm-8 col-lg-9 col-lg-9">
                 <div class="status">
-                  <strong><%= status.user.full_name %></strong>
+                  <h3><%= status.user.full_name %></h3>
                   <p><%= status.content %></p>
                   <%= show_file(status) %>
                   <div class="links-buttons">
                     <%= link_to time_ago_in_words(status.created_at) + ' ago', status %>
+                    <% if signed_in? && current_user == status.user %>
                     <span class="admin">
                       | <%= link_to 'Edit', edit_status_path(status) %>
                       | <%= link_to 'Destroy', status, method: :delete, data: { confirm: 'Are you sure you want to delete? We own it.' } %>
                     </span>
+                        <% end %>
                   </div>
                 </div>
             </div>
