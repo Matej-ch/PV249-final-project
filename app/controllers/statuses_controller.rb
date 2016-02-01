@@ -38,16 +38,24 @@ class StatusesController < ApplicationController
   def update
     @status = current_user.statuses.find(params[:id])
     @document = @status.document
-    if  params[:status] && params[:status].has_key?(:user_id)
-      params[:status].delete(:user_id)
+
+    @status.transaction do
+      @status.update_attributes(params[:status])
+      @document.update_attributes(params[:status][:document]) if @document
+      raise ActiveRecord::Rollback unless @status.valid? @document.try(:valid?)
     end
+
     respond_to do |format|
-      if @status.update_attributes(params[:status]) &&
-      @document && @document.update_attributes(params[:status][:document_attributes])
-        format.html { redirect_to @status, notice: 'Status was successfully updated.' }
-      else
+      format.html { redirect_to @status, notice: 'Status was successfully updated.' }
+    end
+
+  rescue ActiveRecord::Rollback
+      respond_to do |format|
+        format.html do
+          flash.now[:error] = 'Update failed'
+          render :edit
+        end
         format.html { render :edit }
-      end
     end
   end
 

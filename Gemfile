@@ -8,6 +8,7 @@ group :development do
   gem 'sqlite3'
   gem 'log_buddy'
 end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
@@ -21,10 +22,14 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# only for breadcrumbs?
+gem 'twitter-bootstrap-rails'
+
+# for avatars, galleries pictures
 gem 'paperclip'
 # authentication
 gem 'devise'
-# styles
+# vlado forms
 gem 'simple_form'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

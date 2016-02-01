@@ -13,6 +13,9 @@
 <%= render 'layouts/navbar' %>
 <div class="container-fluid custom-padd">
   <div class="row">
+    <div class="col-md-12">
+        <%= render_breadcrumbs(nil) %>
+    </div>
     <% flash.each do |type, message| %>
     <% if flash[:notice] %>
         <div class="alert <%= flash_class(type.to_s) %>" role="alert">
@@ -20,7 +23,7 @@
           <%= message %>
         </div>
     <% end %>
-    <%end%>
+    <% end %>
 
     <%= yield %>
   </div>

@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<div class="col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
 
 <p>
   <strong>User:</strong>
@@ -10,5 +10,6 @@
   <%= @album.title %>
 </p>
 
-<%= link_to 'Edit', edit_album_path(@album) %> |
-<%= link_to 'Back', albums_path %>
+<%= link_to 'Edit', edit_album_path(@album), class: 'btn btn-primary' %> |
+<%= link_to 'Back', albums_path, class: 'btn btn-default' %>
+</div>

@@ -1,6 +1,10 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!, only: [:create, :new, :update, :edit, :destroy]
+  before_filter :find_user
+  before_filter :find_album, only: [:edit, :update, :destroy]
+  before_filter :ensure_proper_user, only: [:edit, :new, :create, :update, :destroy]
+  before_filter :add_breadcrumbs
   # GET /albums
   # GET /albums.json
   def index
@@ -10,21 +14,23 @@ class AlbumsController < ApplicationController
   # GET /albums/1
   # GET /albums/1.json
   def show
+    redirect_to album_pictures_path(params[:album_id])
   end
 
   # GET /albums/new
   def new
-    @album = Album.new
+    @album = current_user.albums.new
   end
 
   # GET /albums/1/edit
   def edit
+    add_breadcrumb 'Editing Gallery'
   end
 
   # POST /albums
   # POST /albums.json
   def create
-    @album = Album.new(album_params)
+    @album =  current_user.albums.new(album_params)
 
     respond_to do |format|
       if @album.save
@@ -42,7 +48,7 @@ class AlbumsController < ApplicationController
   def update
     respond_to do |format|
       if @album.update(album_params)
-        format.html { redirect_to @album, notice: 'Album was successfully updated.' }
+        format.html { redirect_to album_pictures_path, notice: 'Album was successfully updated.' }
         format.json { render :show, status: :ok, location: @album }
       else
         format.html { render :edit }
@@ -61,6 +67,10 @@ class AlbumsController < ApplicationController
     end
   end
 
+  def url_options
+    { nick_name: params[:nick_name]}.merge(super)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_album
@@ -71,4 +81,24 @@ class AlbumsController < ApplicationController
     def album_params
       params.require(:album).permit(:user_id, :title)
     end
+
+    def find_user
+      @user = User.find_by_nick_name(params[:nick_name])
+    end
+
+    def find_album
+      @album = current_user.albums.find(params[:id])
+    end
+
+  def ensure_proper_user
+    if current_user != @user
+      flash[:error] = 'You dont dave permissions'
+      redirect_to album_path
+    end
+  end
+
+  def add_breadcrumbs
+    add_breadcrumb @user, profile_path(@user)
+    add_breadcrumb 'Albums', albums_path
+  end
 end

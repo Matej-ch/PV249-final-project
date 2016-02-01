@@ -1,14 +1,17 @@
-<%= simple_form_for(@picture) do |f| %>
+<div class="col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+
+<%= simple_form_for([@album, @picture], html: { class: 'form-horizontal'}) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :album %>
-    <%= f.association :user %>
+    <%= f.input :asset, as: :file %>
+    <%= paperclip_picture f, :asset %>
     <%= f.input :caption %>
     <%= f.input :description %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: 'btn-success' %>
   </div>
 <% end %>
+</div>

@@ -29,4 +29,9 @@ class ApplicationController < ActionController::Base
                                                                    :current_password,
                                                                    :avatar) }
   end
+
+  private
+  def render_permission_error
+    render file 'public/permission_error', status: :error, layout: false
+  end
 end

@@ -1,24 +1,16 @@
-<p id="notice"><%= notice %></p>
+<div class="col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
 
-<p>
-  <strong>Album:</strong>
-  <%= @picture.album %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @picture.user %>
-</p>
-
-<p>
-  <strong>Caption:</strong>
+  <%= image_tag(@picture.asset.url(:large),
+                alt: @picture.caption,
+                class: 'img-polaroid') %>
+<h3>
   <%= @picture.caption %>
-</p>
+</h3>
 
 <p>
-  <strong>Description:</strong>
   <%= @picture.description %>
 </p>
 
-<%= link_to 'Edit', edit_picture_path(@picture) %> |
-<%= link_to 'Back', pictures_path %>
+<%= link_to 'Edit', edit_album_picture_path(@album, @picture), class: 'btn btn-warning' %> |
+<%= link_to 'Back', album_pictures_path, class: 'btn btn-default' %>
+</div>
