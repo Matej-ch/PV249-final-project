@@ -36,5 +36,10 @@ Rails.application.routes.draw do
       resources :pictures
     end
   end
+
+  resources :conversations do
+    resources :messages
+  end
+
   get '/:id', to: 'profiles#show', as: 'profile'
 end

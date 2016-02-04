@@ -24,7 +24,13 @@ html,body
 
 .custom-padd{
     padding-top: 70px;
+    height: 100%;
 }
+
+.custom-padd .row-main-custom{
+    /*padding-bottom: 60px;*/
+}
+
 .logo-ff{
     font: normal 34px 'Cookie', cursive;
     color: white !important;

@@ -5,31 +5,44 @@
       <%= link_to 'New Status', new_status_path, {:class => 'btn btn-primary'}%>
     </div>
 </div>
-<% @statuses.each do |status| %>
-    <% if can_display_status?(status) %>
-        <div class="row wrapper-statuses" style="clear: left;">
-            <div class="wrapper_gravatar col-sm-2 col-md-1 col-lg-1">
-              <%= avatar_profile_link status.user, {class:'img-circle', width: '100px', height: '100px'},class: 'high-test' %>
-            </div>
-            <div class="col-sm-8 col-lg-9 col-lg-9">
-                <div class="status">
-                  <h3><%= status.user.full_name %></h3>
-                  <p><%= status.content %></p>
-                  <%= show_file(status) %>
-                  <div style="padding-bottom: 5px; padding-top: 5px;">
-                    <span><%= link_to 'Like', like_status_path(status), method: :put %></span>
-                    | <span><%= link_to 'Dislike', dislike_status_path(status), method: :put %></span> | <span><%= status.score %></span></div>
-                  <div class="links-buttons">
-                    <%= link_to time_ago_in_words(status.created_at) + ' ago', status %>
-                    <% if signed_in? && current_user == status.user %>
-                    <span class="admin">
-                      | <%= link_to 'Edit', edit_status_path(status) %>
-                      | <%= link_to 'Destroy', status, method: :delete, data: { confirm: 'Are you sure you want to delete? We own it.' } %>
-                    </span>
-                        <% end %>
-                  </div>
+<% if @statuses.present? %>
+    <% @statuses.each do |status| %>
+        <% if can_display_status?(status) %>
+            <div class="row wrapper-statuses" style="clear: left;">
+                <div class="wrapper_gravatar col-sm-2 col-md-1 col-lg-1">
+                  <%= avatar_profile_link status.user, {class:'img-circle', width: '100px', height: '100px'},class: 'high-test' %>
+                </div>
+                <div class="col-sm-8 col-lg-9 col-lg-9">
+                    <div class="status">
+                      <h3><%= status.user.full_name %>
+                        <% if current_user != status.user %>
+                        <span>
+                          <%= link_to 'Send Message', '#', class: 'btn btn-success btn-xs start-conversation',
+                                                                         'data-sid' => current_user.id, 'data-rip' => status.user.id %>
+                        </span>
+                            <% end %>
+                      </h3>
+                      <p><%= status.content %></p>
+                      <%= show_file(status) %>
+                      <div style="padding-bottom: 5px; padding-top: 5px;">
+                        <span><%= link_to 'Like', like_status_path(status), method: :put %></span>
+                        | <span><%= link_to 'Dislike', dislike_status_path(status), method: :put %></span> | <span><%= status.score %></span></div>
+                      <div class="links-buttons">
+                        <%= link_to time_ago_in_words(status.created_at) + ' ago', status %>
+                        <% if signed_in? && current_user == status.user %>
+                        <span class="admin">
+                          | <%= link_to 'Edit', edit_status_path(status) %>
+                          | <%= link_to 'Destroy', status, method: :delete, data: { confirm: 'Are you sure you want to delete? We own it.' } %>
+                        </span>
+                            <% end %>
+                      </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        <% end %>
     <% end %>
+<% else %>
+    <div class="col-lg-offset-1 col-lg-10 col-sm-12 col-xs-12 col-md-offset-1 col-md-12">
+        <h3 class="label label-danger" style="font-size: 100%;">There are no statuses containing the term(s) <%= params[:search] %>.</h3>
+    </div>
 <% end %>

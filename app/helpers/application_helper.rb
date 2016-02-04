@@ -21,6 +21,7 @@ module ApplicationHelper
     html =''
     if status.document && status.document.attachment?
       html << content_tag(:span, 'File', class: 'label label-info')
+      html << content_tag(:span, ' ', style: 'padding-left:5px;')
       html << link_to( status.document.attachment_file_name, status.document.attachment.url)
       return html.html_safe
     end

@@ -7,6 +7,10 @@ gem 'rails', '4.2.5'
 group :development do
   gem 'sqlite3'
   gem 'log_buddy'
+  gem 'thin'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
   #doesnt work on heroku normally
   gem 'js-routes'
 end
@@ -26,7 +30,8 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # only for breadcrumbs?
 gem 'twitter-bootstrap-rails'
-
+# live chat
+gem 'private_pub'
 # for avatars, galleries pictures
 gem 'paperclip'
 # authentication

@@ -4,7 +4,12 @@ class StatusesController < ApplicationController
 
   # GET /statuses
   def index
-    @statuses = Status.order('updated_at DESC').all
+    # @statuses = Status.order('updated_at DESC').all
+    if params[:search]
+      @statuses = Status.search(params[:search]).order('updated_at DESC')
+    else
+      @statuses = Status.all.order('updated_at DESC')
+    end
   end
 
   # GET /statuses/1

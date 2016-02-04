@@ -12,4 +12,12 @@ class Status < ActiveRecord::Base
   def score
     self.get_upvotes.size - self.get_downvotes.size
   end
+
+
+
+  #ILIKE
+  def self.search(search)
+    where("content LIKE ?", "%#{search}%")
+  end
+
 end
