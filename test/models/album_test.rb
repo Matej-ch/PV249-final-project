@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AlbumTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should belong_to(:user)
+  should have_many(:pictures)
 end

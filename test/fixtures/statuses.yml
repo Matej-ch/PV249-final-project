@@ -1,9 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  name: MyString
   content: MyText
+  user: vlado
 
 two:
-  name: MyString
   content: MyText
+  user: vlado
+
+three:
+  content: "Iam tomas meme master"
+  user: tomas
